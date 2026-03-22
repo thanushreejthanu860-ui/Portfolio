@@ -230,3 +230,65 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+/* ── 11. HERO PARTICLES ── */
+(function spawnParticles() {
+  const container = document.getElementById('heroParticles');
+  if (!container) return;
+  for (let i = 0; i < 28; i++) {
+    const s = document.createElement('span');
+    const size = Math.random() * 8 + 4;
+    s.style.cssText = [
+      `width:${size}px`, `height:${size}px`,
+      `left:${Math.random() * 100}%`,
+      `animation-duration:${Math.random() * 12 + 8}s`,
+      `animation-delay:${Math.random() * 10}s`,
+    ].join(';');
+    container.appendChild(s);
+  }
+})();
+
+/* ── 12. BUTTON RIPPLE ── */
+document.querySelectorAll('.btn').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    const r = document.createElement('span');
+    r.className = 'ripple';
+    const rect = this.getBoundingClientRect();
+    const d = Math.max(rect.width, rect.height);
+    r.style.cssText = `width:${d}px;height:${d}px;left:${e.clientX - rect.left - d/2}px;top:${e.clientY - rect.top - d/2}px;position:absolute;`;
+    this.appendChild(r);
+    r.addEventListener('animationend', () => r.remove());
+  });
+});
+
+/* ── 13. PROJECT CARD TILT ── */
+document.querySelectorAll('.project-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const { left, top, width, height } = card.getBoundingClientRect();
+    const x = ((e.clientX - left) / width  - 0.5) * 14;
+    const y = ((e.clientY - top)  / height - 0.5) * -14;
+    card.style.transform = `perspective(800px) rotateY(${x}deg) rotateX(${y}deg) translateY(-6px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+/* ── 14. ANIMATED COUNTERS ── */
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    const target = +el.getAttribute('data-target');
+    let count = 0;
+    const step = Math.ceil(target / 40);
+    const tick = setInterval(() => {
+      count = Math.min(count + step, target);
+      el.textContent = count + '+';
+      if (count >= target) clearInterval(tick);
+    }, 40);
+    counterObserver.unobserve(el);
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.stat-num[data-target]').forEach(el => counterObserver.observe(el));
