@@ -499,5 +499,98 @@
   </button>
 
   <script src="assets/js/script.js"></script>
+
+  <!-- React CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- React Color Changer Mount Point -->
+  <div id="react-bg-changer"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const colors = [
+      { label: 'Purple', value: '#6c63ff' },
+      { label: 'Pink',   value: '#f472b6' },
+      { label: 'Cyan',   value: '#38bdf8' },
+      { label: 'Green',  value: '#34d399' },
+      { label: 'Orange', value: '#fb923c' },
+      { label: 'Red',    value: '#f87171' },
+    ];
+
+    function BgChanger() {
+      const [open, setOpen]   = useState(false);
+      const [active, setActive] = useState(0);
+
+      useEffect(() => {
+        const color = colors[active].value;
+        const colorDark  = color + '22';
+        const colorMid   = color + '11';
+        document.documentElement.style.setProperty('--clr-primary', color);
+        document.documentElement.style.setProperty('--gradient',
+          `linear-gradient(135deg, ${color} 0%, ${color}cc 50%, #38bdf8 100%)`);
+        document.documentElement.style.setProperty('--bg',      `#0f0f1a`);
+        document.documentElement.style.setProperty('--bg-card', `#1a1a2e`);
+
+        // Change each section background
+        const sections = [
+          { id: 'home',      bg: `linear-gradient(135deg, ${color}33 0%, #0f0f1a 60%)` },
+          { id: 'about',     bg: `linear-gradient(135deg, #1a1a2e 0%, ${color}22 100%)` },
+          { id: 'skills',    bg: `linear-gradient(180deg, ${color}18 0%, #0f0f1a 100%)` },
+          { id: 'education', bg: `linear-gradient(135deg, #0f0f1a 0%, ${color}22 100%)` },
+          { id: 'projects',  bg: `linear-gradient(135deg, ${color}22 0%, #1a1a2e 100%)` },
+          { id: 'contact',   bg: `linear-gradient(135deg, #1a1a2e 0%, ${color}33 100%)` },
+        ];
+        sections.forEach(({ id, bg }) => {
+          const el = document.getElementById(id);
+          if (el) el.style.background = bg;
+        });
+      }, [active]);
+
+      return (
+        <div style={styles.wrap}>
+          {open && (
+            <div style={styles.panel}>
+              <p style={styles.label}>Theme Color</p>
+              <div style={styles.swatches}>
+                {colors.map((c, i) => (
+                  <button
+                    key={c.label}
+                    title={c.label}
+                    onClick={() => { setActive(i); setOpen(false); }}
+                    style={{
+                      ...styles.swatch,
+                      background: c.value,
+                      outline: active === i ? `3px solid #fff` : 'none',
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+          <button
+            onClick={() => setOpen(o => !o)}
+            style={{ ...styles.fab, background: colors[active].value }}
+            title="Change theme color"
+          >
+            🎨
+          </button>
+        </div>
+      );
+    }
+
+    const styles = {
+      wrap:    { position: 'fixed', bottom: '5.5rem', right: '2rem', zIndex: 9999, display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.5rem' },
+      fab:     { width: 46, height: 46, borderRadius: '50%', border: 'none', cursor: 'pointer', fontSize: '1.3rem', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.3)', transition: 'transform 0.2s' },
+      panel:   { background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 12, padding: '0.75rem 1rem', boxShadow: '0 8px 32px rgba(0,0,0,0.25)' },
+      label:   { fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.5rem', fontWeight: 600 },
+      swatches:{ display: 'flex', gap: '0.5rem' },
+      swatch:  { width: 28, height: 28, borderRadius: '50%', border: 'none', cursor: 'pointer', transition: 'transform 0.2s' },
+    };
+
+    ReactDOM.createRoot(document.getElementById('react-bg-changer')).render(<BgChanger />);
+  </script>
 </body>
 </html>

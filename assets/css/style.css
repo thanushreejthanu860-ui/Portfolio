@@ -443,6 +443,54 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   50%       { transform: translateX(-50%) translateY(8px); }
 }
 
+/* ── SECTION BLOB BACKGROUNDS ── */
+.about,
+.skills,
+.education,
+.projects,
+.contact {
+  position: relative;
+  overflow: hidden;
+}
+
+.about::before,    .skills::before,
+.education::before,.projects::before,
+.contact::before {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 0;
+  top: -150px; left: -150px;
+  background: radial-gradient(circle, var(--clr-primary), var(--clr-secondary), var(--clr-accent));
+  animation: wave-move-1 10s ease-in-out infinite alternate;
+}
+
+.about::after,    .skills::after,
+.education::after,.projects::after,
+.contact::after {
+  content: '';
+  position: absolute;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 0;
+  bottom: -150px; right: -100px;
+  background: radial-gradient(circle, #f472b6, #fb923c, #facc15);
+  animation: wave-move-2 12s ease-in-out infinite alternate;
+}
+
+.about > *,
+.skills > *,
+.education > *,
+.projects > *,
+.contact > * { position: relative; z-index: 1; }
+
 /* ── 7. ABOUT ── */
 .about { background: var(--bg-card); }
 
