@@ -596,7 +596,98 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 }
 
 
-/* ── 9. PROJECTS ── */
+/* ── 9. EDUCATION ── */
+.education { background: var(--bg); }
+
+.education-timeline {
+  max-width: 700px;
+  margin-inline: auto;
+}
+
+.edu-card {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.edu-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+  border-color: var(--clr-primary);
+}
+
+.edu-icon {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: rgba(108,99,255,0.12);
+  border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.edu-icon i {
+  font-size: 1.8rem;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.edu-body { flex: 1; }
+
+.edu-year {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--clr-primary);
+  background: rgba(108,99,255,0.1);
+  padding: 0.2rem 0.75rem;
+  border-radius: 50px;
+  display: inline-block;
+  margin-bottom: 0.75rem;
+}
+
+.edu-body h3 {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.edu-body h4 {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--clr-secondary);
+  margin-bottom: 0.75rem;
+}
+
+.edu-body p {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.3rem;
+}
+
+.edu-body p i { font-size: 1rem; }
+
+.edu-badge {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.3rem 0.9rem;
+  border-radius: 50px;
+  background: rgba(52,211,153,0.12);
+  border: 1px solid rgba(52,211,153,0.3);
+  color: #34d399;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+
+/* ── 10. PROJECTS ── */
 .projects { background: var(--bg-card); }
 
 .filter-btns {
